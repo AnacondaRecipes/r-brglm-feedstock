@@ -1,4 +1,4 @@
-{% set version = '0.5-9' %}
+{% set version = '0.6.1' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,31 +12,46 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/brglm_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/brglm/brglm_{{ version }}.tar.gz
-  sha256: 5b70bc8216d1af37304e5e7c6e902b92327cc2aad5798ea6ba1634dfab921d92
+  sha256: b786db50edc703b1b6a986b1ce13d31aab76fd3c672a6540161b25f5cd57239f
+
+
+  # patches:
+   # List any patch files here
+   # - fix.patch
 
 build:
+  # If this is a new build for the same version, increment the build number.
   number: 0
-  skip: true  # [win32]
+
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: MASS
 requirements:
   build:
     - r-base
+    - {{ compiler('c') }}        # [not win]
+    - {{native}}toolchain        # [win]
     - r-profilemodel
-    - posix                # [win]
-    - {{native}}toolchain  # [win]
-    - gcc                  # [not win]
 
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
     - r-profilemodel
 
 test:
   commands:
-    - $R -e "library('brglm')"  # [not win]
+    # You can put additional test commands to be run here.
+    - $R -e "library('brglm')"           # [not win]
     - "\"%R%\" -e \"library('brglm')\""  # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
 
 about:
   home: http://www.ucl.ac.uk/~ucakiko/index.html
@@ -57,3 +72,26 @@ extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - mingwandroid
+
+# The original CRAN metadata for this package was:
+
+# Package: brglm
+# Title: Bias Reduction in Binomial-Response Generalized Linear Models
+# Version: 0.6.1
+# Date: 2017-06-28
+# Author: Ioannis Kosmidis <i.kosmidis@ucl.ac.uk>
+# Maintainer: Ioannis Kosmidis <i.kosmidis@ucl.ac.uk>
+# URL: http://www.ucl.ac.uk/~ucakiko/index.html
+# Description: Fit generalized linear models with binomial responses using either an adjusted-score approach to bias reduction or maximum penalized likelihood where penalization is by Jeffreys invariant prior. These procedures return estimates with improved frequentist properties (bias, mean squared error) that are always finite even in cases where the maximum likelihood estimates are infinite (data separation). Fitting takes place by fitting generalized linear models on iteratively updated pseudo-data. The interface is essentially the same as 'glm'.  More flexibility is provided by the fact that custom pseudo-data representations can be specified and used for model fitting. Functions are provided for the construction of confidence intervals for the reduced-bias estimates.
+# License: GPL (>= 2)
+# Depends: R (>= 2.6.0), profileModel
+# Suggests: MASS
+# NeedsCompilation: yes
+# Packaged: 2017-06-28 21:46:05 UTC; yiannis
+# Repository: CRAN
+# Date/Publication: 2017-06-29 05:56:44 UTC
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
