@@ -1,4 +1,4 @@
-{% set version = '0.6.1' %}
+{% set version = '0.6.2' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -11,7 +11,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/brglm_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/brglm/brglm_{{ version }}.tar.gz
-  sha256: b786db50edc703b1b6a986b1ce13d31aab76fd3c672a6540161b25f5cd57239f
+  sha256: c2af432a43ccf37e9de50317f770b9703a4c80b4ef79ec40aa8e7ec3987e3631
 
 build:
   merge_build_host: True  # [win]
@@ -56,7 +56,7 @@ test:
     # Put any additional test requirements here.
 
 about:
-  home: http://www.ucl.ac.uk/~ucakiko/index.html
+  home: https://github.com/ikosmidis/brglm
   license: GPL (>= 2)
   summary: Fit generalized linear models with binomial responses using either an adjusted-score
     approach to bias reduction or maximum penalized likelihood where penalization is
@@ -69,6 +69,7 @@ about:
     Functions are provided for the construction of confidence intervals for the reduced-bias
     estimates.
   license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
@@ -79,20 +80,23 @@ extra:
 # The original CRAN metadata for this package was:
 
 # Package: brglm
+# Type: Package
 # Title: Bias Reduction in Binomial-Response Generalized Linear Models
-# Version: 0.6.1
-# Date: 2017-06-28
-# Author: Ioannis Kosmidis <i.kosmidis@ucl.ac.uk>
-# Maintainer: Ioannis Kosmidis <i.kosmidis@ucl.ac.uk>
-# URL: http://www.ucl.ac.uk/~ucakiko/index.html
+# Version: 0.6.2
+# Authors@R: person(given = "Ioannis", family = "Kosmidis", role = c("aut", "cre"), email = "ioannis.kosmidis@warwick.ac.uk", comment = c(ORCID = "0000-0003-1556-0302"))
+# URL: https://github.com/ikosmidis/brglm
+# BugReports: https://github.com/ikosmidis/brglm/issues
 # Description: Fit generalized linear models with binomial responses using either an adjusted-score approach to bias reduction or maximum penalized likelihood where penalization is by Jeffreys invariant prior. These procedures return estimates with improved frequentist properties (bias, mean squared error) that are always finite even in cases where the maximum likelihood estimates are infinite (data separation). Fitting takes place by fitting generalized linear models on iteratively updated pseudo-data. The interface is essentially the same as 'glm'.  More flexibility is provided by the fact that custom pseudo-data representations can be specified and used for model fitting. Functions are provided for the construction of confidence intervals for the reduced-bias estimates.
 # License: GPL (>= 2)
 # Depends: R (>= 2.6.0), profileModel
 # Suggests: MASS
+# RoxygenNote: 6.1.1
 # NeedsCompilation: yes
-# Packaged: 2017-06-28 21:46:05 UTC; yiannis
+# Packaged: 2019-04-02 15:13:35 UTC; yiannis
+# Author: Ioannis Kosmidis [aut, cre] (<https://orcid.org/0000-0003-1556-0302>)
+# Maintainer: Ioannis Kosmidis <ioannis.kosmidis@warwick.ac.uk>
 # Repository: CRAN
-# Date/Publication: 2017-06-29 05:56:44 UTC
+# Date/Publication: 2019-04-02 17:40:15 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for
